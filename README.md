@@ -1,0 +1,2 @@
+# bud_ExtendScript
+PhotoShopで画像の解像度やカラーモードの変換・PNGファイルをJPGとTIFFに出し分ける一連の操作をするプログラム
