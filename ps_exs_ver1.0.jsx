@@ -11,13 +11,11 @@ function main() {
         var fileList = inputFolder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd)$/i);
 
         for (var i = 0; i < fileList.length; i++) {
-            // ライン14の修正
             if (!isFileProcessed(fileList[i].name)) {
                 processFile(fileList[i]);
                 processedFiles.push(fileList[i].name);
             }
 
-            // 追加する関数
             function isFileProcessed(fileName) {
                 for (var i = 0; i < processedFiles.length; i++) {
                     if (processedFiles[i] === fileName) {
@@ -36,10 +34,8 @@ function processFile(file) {
     app.open(file);
     var doc = app.activeDocument;
     
-    // 解像度を350に設定（サイズは変更しない）
     doc.resizeImage(undefined, undefined, 350, ResampleMethod.NONE);
     
-    // 画像サイズの調整（4000pxを超える場合のみ）
     if (doc.width > 4000 || doc.height > 4000) {
         if (doc.width > doc.height) {
             doc.resizeImage(4000, null, 350, ResampleMethod.BICUBIC);
@@ -51,22 +47,21 @@ function processFile(file) {
     var baseName = doc.name.split('.')[0];
     var fileExtension = file.name.split('.').pop().toLowerCase();
     
-    // PNGファイルの場合、TIFFで保存
     if (fileExtension === "png") {
+        if (doc.mode != DocumentMode.CMYK) {
+            doc.changeMode(ChangeMode.CMYK);
+        }
         saveAsTIFF(doc, outputFolder + "/" + baseName + ".tif");
     }
     
-    // レイヤーの統合
     if (doc.layers.length > 1) {
         doc.flatten();
     }
     
-    // カラーモードをCMYKに変換
     if (doc.mode != DocumentMode.CMYK) {
         doc.changeMode(ChangeMode.CMYK);
     }
     
-    // JPEGで保存（すべてのファイル）
     saveAsJPEG(doc, outputFolder + "/" + baseName + ".jpg");
     
     doc.close(SaveOptions.DONOTSAVECHANGES);
