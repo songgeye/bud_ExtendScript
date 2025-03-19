@@ -47,7 +47,7 @@ function processFile(file) {
     var baseName = doc.name.split('.')[0];
     var fileExtension = file.name.split('.').pop().toLowerCase();
     
-    if (fileExtension === "png") {
+    if (fileExtension === "png, eps, gif") {
         if (doc.mode != DocumentMode.CMYK) {
             doc.changeMode(ChangeMode.CMYK);
         }
