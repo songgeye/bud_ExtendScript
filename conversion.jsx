@@ -8,7 +8,7 @@ function main() {
     outputFolder = Folder.selectDialog("出力先フォルダを選択してください。");
 
     if (inputFolder != null && outputFolder != null) {
-        var fileList = inputFolder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd)$/i);
+        var fileList = inputFolder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|gif)$/i);
 
         for (var i = 0; i < fileList.length; i++) {
             if (!isFileProcessed(fileList[i].name)) {
@@ -47,7 +47,7 @@ function processFile(file) {
     var baseName = doc.name.split('.')[0];
     var fileExtension = file.name.split('.').pop().toLowerCase();
     
-    if (fileExtension === "png") {
+    if (fileExtension === "png" || fileExtension === "eps" || fileExtension === "gif") {
         if (doc.mode != DocumentMode.CMYK) {
             doc.changeMode(ChangeMode.CMYK);
         }
