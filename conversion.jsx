@@ -53,20 +53,6 @@ function processFile(file) {
         }
         saveAsTIFF(doc, outputFolder + "/" + baseName + ".tif");
     }
-
-    if (fileExtension === "eps") {
-        if (doc.mode != DocumentMode.CMYK) {
-            doc.changeMode(ChangeMode.CMYK);
-        }
-        saveAsTIFF(doc, outputFolder + "/" + baseName + ".tif");
-    }
-
-    if (fileExtension === "gif") {
-        if (doc.mode != DocumentMode.CMYK) {
-            doc.changeMode(ChangeMode.CMYK);
-        }
-        saveAsTIFF(doc, outputFolder + "/" + baseName + ".tif");
-    }
     
     if (doc.layers.length > 1) {
         doc.flatten();
