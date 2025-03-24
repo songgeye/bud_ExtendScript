@@ -81,7 +81,7 @@ function processFile(file, sourceFolder) {
         if (doc.mode != DocumentMode.CMYK) {
             doc.changeMode(ChangeMode.CMYK);
         }
-        saveAsTIFF(doc, targetFolder + "/" + baseName + ".tif");
+        saveAsTIFF(doc, outputFolder + "/" + baseName + ".tif");
     }
     
     if (doc.layers.length > 1) {
@@ -92,7 +92,7 @@ function processFile(file, sourceFolder) {
         doc.changeMode(ChangeMode.CMYK);
     }
     
-    saveAsJPEG(doc, targetFolder + "/" + baseName + ".jpg");
+    saveAsJPEG(doc, outputFolder + "/" + baseName + ".jpg");
     
     doc.close(SaveOptions.DONOTSAVECHANGES);
 }
