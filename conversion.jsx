@@ -77,7 +77,7 @@ function processFile(file, sourceFolder) {
         targetFolder.create();
     }
     
-    if (fileExtension === "png") {
+    if (fileExtension === "png" || fileExtension === "gif") {
         if (doc.mode != DocumentMode.CMYK) {
             doc.changeMode(ChangeMode.CMYK);
         }
