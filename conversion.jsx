@@ -8,7 +8,7 @@ function main() {
     outputFolder = Folder.selectDialog("出力先フォルダを選択してください。");
 
     if (inputFolder != null && outputFolder != null) {
-        var fileList = inputFolder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|gif)$/i);
+        var fileList = inputFolder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|gif|jfif)$/i);
 
         for (var i = 0; i < fileList.length; i++) {
             if (!isFileProcessed(fileList[i].name)) {
