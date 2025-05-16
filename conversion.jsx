@@ -23,7 +23,7 @@ function processFolder(folder, depth) {
     }
     
     // 現在のフォルダ内の画像ファイルを処理
-    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|gif|jfif|webp|NEF|CR2|avif|jpf|~tmp)$/i);
+    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|svg|gif|jfif|webp|bmp|heic|NEF|CR2|avif|jpf|~tmp)$/i);
     for (var i = 0; i < fileList.length; i++) {
         if (!isFileProcessed(fileList[i].name)) {
             processFile(fileList[i], folder);
