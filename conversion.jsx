@@ -23,7 +23,7 @@ function processFolder(folder, depth) {
     }
     
     // 現在のフォルダ内の画像ファイルを処理
-    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|svg|gif|jfif|webp|bmp|heic|avif|jpf|~tmp|CR|K25|KDC|CRW|CR2|CR3|ERF|NEF|NRW|ORF|PEF|RW2|ARW|SRF|SR2|DNG)$/i);
+    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|svg|gif|jfif|webp|bmp|heic|avif|jpf|~tmp|CR|K25|KDC|CRW|CR2|CR3|ERF|NEF|NRW|ORF|PEF|RW2|ARW|SRF|SR2|X3F|DNG)$/i);
     for (var i = 0; i < fileList.length; i++) {
         if (!isFileProcessed(fileList[i].name)) {
             processFile(fileList[i], folder);
