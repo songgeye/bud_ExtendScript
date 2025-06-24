@@ -41,8 +41,6 @@ function processFolder(folder, depth) {
     }
 }
 
-// ★削除: isFileProcessed関数はgetUniqueFileNameで重複回避するため不要になりました。
-
 function processFile(file, sourceFolder) {
     app.open(file);
     var doc = app.activeDocument;
@@ -131,30 +129,65 @@ function saveAsTIFF(doc, filePath) {
 // ★追加: 機種依存文字を除去する関数
 function sanitizeFileName(fileName) {
     var sanitized = fileName;
-    // ①〜⑳、㉑〜㉟
-    sanitized = sanitized.replace(/[\u2460-\u2473]/g, ""); // 丸数字1-20
-    sanitized = sanitized.replace(/[\u3251-\u325F]/g, ""); // 丸数字21-35 (一部範囲外も含むが安全策として)
+
+    // ①〜⑳、㉑〜㉟などの丸数字
+    sanitized = sanitized.replace(/[\u2460-\u2473\u3251-\u325F]/g, "");
     // ㈱、㈲、㈹
     sanitized = sanitized.replace(/[\u3231\u3232\u3239]/g, "");
     // ㍾、㍽、㍼、㍻
     sanitized = sanitized.replace(/[\u337E-\u3381]/g, "");
     // ㊤、㊥、㊦、㊧、㊨
     sanitized = sanitized.replace(/[\u3290-\u3294]/g, "");
+
     // その他の全角記号類（安全策として広めにカット）
     // 参考: 一般的な全角記号のUnicode範囲をいくつか指定。必要に応じて調整。
-    sanitized = sanitized.replace(/[\u3000-\u303F]/g, ""); // 日本語記号・句読点
-    sanitized = sanitized.replace(/[\uFF01-\uFF0F]/g, ""); // 全角記号 (！〜／)
-    sanitized = sanitized.replace(/[\uFF1A-\uFF1F]/g, ""); // 全角記号 (：〜？)
-    sanitized = sanitized.replace(/[\uFF3B-\uFF40]/g, ""); // 全角記号 (［〜｀)
-    sanitized = sanitized.replace(/[\uFF5B-\uFF65]/g, ""); // 全角記号 (｛〜﹥)
-    sanitized = sanitized.replace(/[\u2000-\u206F]/g, ""); // 一般的な記号類
-    sanitized = sanitized.replace(/[\u2190-\u21FF]/g, ""); // 矢印
-    sanitized = sanitized.replace(/[\u25A0-\u25FF]/g, ""); // 幾何学図形
-    
+    // CJK Symbols and Punctuation (一部重複するがより広範に)
+    sanitized = sanitized.replace(/[\u3000-\u303F]/g, "");
+    // Halfwidth and Fullwidth Forms (全角英数字、記号)
+    sanitized = sanitized.replace(/[\uFF00-\uFFEF]/g, "");
+    // General Punctuation (一般的な句読点や記号)
+    sanitized = sanitized.replace(/[\u2000-\u206F]/g, "");
+    // Superscripts and Subscripts (上付き・下付き文字)
+    sanitized = sanitized.replace(/[\u2070-\u209F]/g, "");
+    // Currency Symbols (通貨記号)
+    sanitized = sanitized.replace(/[\u20A0-\u20CF]/g, "");
+    // Letterlike Symbols (レターライク記号)
+    sanitized = sanitized.replace(/[\u2100-\u214F]/g, "");
+    // Number Forms (数字形式)
+    sanitized = sanitized.replace(/[\u2150-\u218F]/g, "");
+    // Arrows (矢印)
+    sanitized = sanitized.replace(/[\u2190-\u21FF]/g, "");
+    // Mathematical Operators (数学記号)
+    sanitized = sanitized.replace(/[\u2200-\u22FF]/g, "");
+    // Miscellaneous Technical (技術系記号)
+    sanitized = sanitized.replace(/[\u2300-\u23FF]/g, "");
+    // Control Pictures (制御記号)
+    sanitized = sanitized.replace(/[\u2400-\u243F]/g, "");
+    // Optical Character Recognition (OCR記号)
+    sanitized = sanitized.replace(/[\u2440-\u245F]/g, "");
+    // Box Drawing (罫線)
+    sanitized = sanitized.replace(/[\u2500-\u257F]/g, "");
+    // Block Elements (ブロック要素)
+    sanitized = sanitized.replace(/[\u2580-\u259F]/g, "");
+    // Geometric Shapes (幾何学図形)
+    sanitized = sanitized.replace(/[\u25A0-\u25FF]/g, "");
+    // Miscellaneous Symbols (その他の記号)
+    sanitized = sanitized.replace(/[\u2600-\u26FF]/g, "");
+    // Dingbats (絵文字)
+    sanitized = sanitized.replace(/[\u2700-\u27BF]/g, "");
+    // Supplemental Arrows-A, B, C (追加の矢印)
+    sanitized = sanitized.replace(/[\u27F0-\u27FF\u2900-\u297F\u1F800-\u1F8FF]/g, "");
+    // Miscellaneous Symbols and Arrows (その他の記号と矢印)
+    sanitized = sanitized.replace(/[\u2B00-\u2BFF]/g, "");
+
     // ファイル名として不適切な文字も除去（Windows/Mac共通で問題となりやすい文字）
-    sanitized = sanitized.replace(/[\/\\:\*\?"<>\|]/g, "");
+    // 半角記号も含めて厳しく除去
+    sanitized = sanitized.replace(/[\/\\:\*\?"<>\|\!\@\#\$\%\^\&\*\(\)\=\+\-\[\]\{\}\;\,\.`~]/g, "");
+
+    // 連続するスペースをアンダースコアに置換し、前後のスペースをトリム
+    sanitized = sanitized.replace(/\s+/g, "_").replace(/^_|_$/g, "");
     
-    return sanitized.replace(/\s+/g, "_"); // 連続するスペースをアンダースコアに置換
+    return sanitized;
 }
 
 // ★追加: ファイル名の重複を回避する関数
