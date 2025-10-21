@@ -142,8 +142,6 @@ function sanitizeFileName(fileName) {
     sanitized = sanitized.replace(/[㊤㊥㊦㊧㊨]/g, "");
     // ★追加: ㈰、㈪、㈫、㈬、㈭、㈮、㈯ を個別に指定して除去
     sanitized = sanitized.replace(/[㈰㈪㈫㈬㈭㈮㈯]/g, "");
-    // ★追加: ドットとカンマも除去
-    sanitized = sanitized.replace(/[.,]/g, "");
 
     // その他の全角記号類（安全策として広めにカット）
     // 前回の提案より広範なUnicode範囲をカバーするようにします。
