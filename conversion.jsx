@@ -25,7 +25,7 @@ function processFolder(folder, depth) {
     
     // 現在のフォルダ内の画像ファイルを処理
     // ★改良: 処理済みファイルリストのチェックを削除。getUniqueFileNameで重複回避するため。
-    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|eps|svg|gif|jfif|webp|bmp|heic|avif|jpf|~tmp|CR|K25|KDC|CRW|CR2|CR3|ERF|NEF|NRW|ORF|PEF|RW2|ARW|SRF|SR2|X3F|RWL|BAY|DNG)$/i);
+    var fileList = folder.getFiles(/\.(jpg|jpeg|png|tif|tiff|psd|ai|eps|svg|gif|jfif|webp|bmp|heic|avif|jpf|~tmp|CR|K25|KDC|CRW|CR2|CR3|ERF|NEF|NRW|ORF|PEF|RW2|ARW|SRF|SR2|X3F|RWL|BAY|DNG)$/i);
     for (var i = 0; i < fileList.length; i++) {
         processFile(fileList[i], folder);
     }
