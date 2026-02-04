@@ -52,18 +52,7 @@ function isFileProcessed(fileName) {
 }
 
 function processFile(file, sourceFolder) {
-    try {
-        // ファイルが実際に存在し、かつ隠しファイルでないかチェック
-        if (file instanceof File && file.name.indexOf(".") !== 0 && file.name.indexOf("~") !== 0) {
-            app.open(file);
-        } else {
-            return; // スキップ
-        }
-    } catch (e) {
-        // 開けなかった場合はログに残すか無視して次へ
-        $.writeln("ファイルを開けませんでした: " + file.name);
-        return; 
-    }
+    app.open(file);
     var doc = app.activeDocument;
     
     doc.resizeImage(undefined, undefined, 350, ResampleMethod.NONE);
