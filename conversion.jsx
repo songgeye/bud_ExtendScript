@@ -12,7 +12,7 @@ function main() {
     if (inputFolder != null && outputFolder != null) {
         // 再帰的にフォルダを処理（深さ0から開始）
         processFolder(inputFolder, 0);
-        alert("処理が完了しました。");
+        // alert("処理が完了しました。");
     }
 }
 
